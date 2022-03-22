@@ -2,12 +2,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class main {
+    public static List<Correo> correos = new ArrayList<Correo>();
+    public static List<Correo> correosReseteados = new ArrayList<Correo>();
 
     public static void main(String[] args) {
 
+        cargarCorreos();
+        // ejercicio1();
+        ejercicio2();
 
-        List<Correo> correos = new ArrayList<Correo>();
-        List<Correo> correosReseteados = new ArrayList<Correo>();
+    }
+
+    //ejercicio 2
+    public static void cargarCorreos() {
+
         correos.add(new Correo("franco.sosa@gmail.com", false));
         correos.add(new Correo("franco.sosa1@gmail.com", true));
         correos.add(new Correo("franco.sosa2@gmail.com", true));
@@ -38,8 +46,9 @@ public class main {
         correos.add(new Correo("franco.sosa27.com", false));
         correos.add(new Correo("franco.sosa28@gmail.com", true));
         correos.add(new Correo("franco.sosa29@gmail.com", false));
+    }
 
-
+    public static void ejercicio1() {
         //a Distinct: para ver si hay correo repetidos, si hay correos repetidos eliminarlos
         List<Correo> distinctElements = correos
                 .stream()
@@ -52,11 +61,11 @@ public class main {
         //c Map: para saber si todos los correos cumple con todas las condiciones (Que cuente con el @ y el dominio)
 
         List<Correo> correosValidados = correos.stream().map(correo -> correo
-        ).filter(e -> e.getCorreo().contains(".com") &&
-                e.getCorreo().contains("@gmail")
-                ||
-                e.getCorreo().contains("@hotmail") ||
-                e.getCorreo().contains("@outlook")).collect(Collectors.toList());
+        ).filter(e ->
+                e.getCorreo().contains("@gmail.com")
+                        ||
+                        e.getCorreo().contains("@hotmail.com") ||
+                        e.getCorreo().contains("@outlook.com")).collect(Collectors.toList());
         if (correosValidados.size() == correos.size()) {
             System.out.println("los correos estaban ok");
         } else {
@@ -65,25 +74,71 @@ public class main {
 //D Saber la cantidad de correos que hay, sin usar un ciclo
         System.out.println("la cantidad de correos es :" + correos.size());
 // e Saber la cantidad de correos gmail, hotmail y outlook sin usar un ciclo
-        System.out.println("la cantidad de correos gmail es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@gmail")).collect(Collectors.toList()).size());
-        System.out.println("la cantidad de correos hotmail es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@hotmail")).collect(Collectors.toList()).size());
-        System.out.println("la cantidad de correos outlook es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@outlook")).collect(Collectors.toList()).size());
+        System.out.println("la cantidad de correos gmail es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@gmail.com")).collect(Collectors.toList()).size());
+        System.out.println("la cantidad de correos hotmail es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@hotmail.com")).collect(Collectors.toList()).size());
+        System.out.println("la cantidad de correos outlook es " + correos.stream().map(x -> x).filter(correo -> correo.getCorreo().contains("@outlook.com")).collect(Collectors.toList()).size());
 
-        correosReseteados= correos.stream().filter(correo -> {
-            if(correo.getEstado()){
-               correo.changeBoolean();
+        correosReseteados = correos.stream().filter(correo -> {
+            if (correo.getEstado()) {
+                correo.changeBoolean();
             }
-          return true;
+            return true;
         }).collect(Collectors.toList());
 
         correosReseteados.forEach(System.out::println);
+    }
+
+    public static void ejercicio2() {
+        Scanner sc = new Scanner(System.in);
+        String entrada = "";
+        List<String> chat = new ArrayList<>();
+        final List<String> malasPalabras = List.of("malo1",
+                "malo2",
+                "malo3",
+                "malo4",
+                "malo5",
+                "malo",
+                "malo6",
+                "malo7",
+                "malo8",
+                "malo9",
+                "malo10");
+     /*   final List<String> test = List.of("malo1",
+                "malo2",
+                "malo3",
+                "malo4",
+                "malo5",
+                "malo",
+                "malo6 dasdasdas",
+                "malo7 dsadasd",
+                "malo8 dsadasda",
+                "malo9 dasdasda",
+                "dasdasda");
+                */
+        int i = 0;
+       do {
+            System.out.println("ingrese una frase");
+            entrada = sc.nextLine();
+            chat.add(entrada);
+            i++;
+        } while (i < 9);
+
+        chat.stream().map(palabra -> {
+            String word = malasPalabras.stream().
+                    filter(palabra::contains).
+                    findFirst().
+                    orElse("");
+            if (!word.isEmpty()) {
+                return palabra.replace(word, "***");
+            }
+
+            return palabra;
+        }).forEach(System.out::println);
 
 
-        }
-
-        //ejercicio 2
-        
+        //
 
     }
+}
 
 
