@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -6,10 +7,29 @@ public class main {
     public static List<Correo> correosReseteados = new ArrayList<Correo>();
 
     public static void main(String[] args) {
-
+Scanner sc1=new Scanner(System.in);
         cargarCorreos();
-        // ejercicio1();
-        ejercicio2();
+        int opcion=0;
+        do {
+            System.out.println("Ingrese el numero de ejercicio a realizar 1 2 o 3");
+            opcion=sc1.nextInt();
+            switch (opcion){
+
+                case 1:
+                    ejercicio1();
+                    break;
+                case 2:
+                    ejercicio2();
+                    break;
+                case 3:
+                    ejercicio3(); //solo se hizo la parte de derivar
+                    break;
+                default:
+                    break;
+            }
+
+        }while (opcion!=0);
+
 
     }
 
@@ -116,7 +136,7 @@ public class main {
                 "dasdasda");
                 */
         int i = 0;
-       do {
+        do {
             System.out.println("ingrese una frase");
             entrada = sc.nextLine();
             chat.add(entrada);
@@ -139,6 +159,32 @@ public class main {
         //
 
     }
+
+    public static void ejercicio3() {
+        int gradoPolinomio;
+        double coeficientes[]=new double[4];
+        Derivacion derivada = null;
+        Scanner sc=new Scanner(System.in);
+        int numdev=1;
+        System.out.println("ingrese la derivada a realizar 1 o 2");
+        numdev=sc.nextInt();
+        gradoPolinomio=sc.nextInt();
+        System.out.println("ingrese el grado del polinomio maximo grado 3");
+        gradoPolinomio=sc.nextInt();
+        int i=gradoPolinomio;
+        do {
+
+            System.out.println("ingrese el coeficiente para x^"+i);
+            coeficientes[i]=sc.nextDouble();
+            i--;
+        }while (i>-1);
+        derivada = new Derivacion(gradoPolinomio,coeficientes);
+        System.out.println( derivada.mostrarpolinomio());
+          derivada.Derivar(numdev);
+        System.out.println( derivada.mostrarpolinomio());
+
+    }
+
 }
 
 
